@@ -1,9 +1,9 @@
 services:
   database:
-    build: ./mysql
+    build: ./database/mysql-server
     container_name: ${COMPOSE_PROJECT_NAME}_mysql
-    volumes:
-      - ./mysql/src:/var/lib/mysql
+#   volumes:
+#     - ./database/mysql-server/src:/var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD=${DATABASE_ROOT_PASSWORD}
       - MYSQL_USER=${DATABASE_USER}
@@ -23,12 +23,12 @@ services:
   #   ports: 
   #     - 8000:80
 
-  # phpmyadmin:
-  #   image: phpmyadmin/phpmyadmin
-  #   ports:
-  #     - 8080:80
-  #   restart: always
-  #   environment:
-  #     PMA_HOST: database
-  #   depends_on:
-  #     - database
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - 8080:80
+    restart: always
+    environment:
+      PMA_HOST: database
+    depends_on:
+      - database

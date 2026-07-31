@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.26, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 26.7.0, for Linux (x86_64)
 --
--- Host: localhost    Database: database-in-php
+-- Host: localhost    Database: php-to-sql
 -- ------------------------------------------------------
--- Server version	8.0.26
+-- Server version	26.7.0
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -24,10 +24,10 @@ DROP TABLE IF EXISTS `users`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `users` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `username` varchar(32) NOT NULL,
-  `password` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `username` text NOT NULL,
+  `password` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -36,7 +36,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (3,'paulSerban','werwer'),(4,'Jimbo','55642'),(5,'paulSerban','dfhfg'),(44,'fdasdf','asdfasdf'),(45,'paulSerban','qaz'),(46,'paulSerban','serban'),(47,'paulSerban','*0'),(48,'paulSerban','*0'),(49,'paulSerban','*0'),(50,'paulSerban','$2y$10$iusesomecrazystrings2uO/0CqIGlnmTg8v38D4LU18t4II0lVfW'),(51,'paulSerban','$2y$10$iusesomecrazystrings2una9bb/Z5jE8FEkoEsuteibrD.UU.Sn2');
+INSERT INTO `users` VALUES (1,'admin','password'),(2,'Alice','this is my password'),(3,'Job','123456789');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -49,4 +49,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-09-11 10:22:41
+-- Dump completed on 2026-07-31  9:34:06
