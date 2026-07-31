@@ -1,0 +1,34 @@
+services:
+  database:
+    build: ./mysql
+    container_name: ${COMPOSE_PROJECT_NAME}_mysql
+    volumes:
+      - ./mysql/src:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DATABASE_ROOT_PASSWORD}
+      - MYSQL_USER=${DATABASE_USER}
+      - MYSQL_PASSWORD=${DATABASE_PASSWORD}
+      - MYSQL_DATABASE=${COMPOSE_PROJECT_NAME}
+    restart: always
+
+  # php-apache-env:
+  #   container_name: database-in-php
+  #   build: 
+  #     context: ./php
+  #     dockerfile: Dockerfile
+  #   depends_on: 
+  #     - db
+  #   volumes: 
+  #     - ./php/src:/var/www/html
+  #   ports: 
+  #     - 8000:80
+
+  # phpmyadmin:
+  #   image: phpmyadmin/phpmyadmin
+  #   ports:
+  #     - 8080:80
+  #   restart: always
+  #   environment:
+  #     PMA_HOST: database
+  #   depends_on:
+  #     - database
