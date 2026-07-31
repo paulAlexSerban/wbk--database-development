@@ -1,0 +1,12 @@
+{
+  "name": "js-to-postgresql",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "seed": "node scripts/seed.js"
+  },
+  "dependencies": {
+    "@faker-js/faker": "^10.5.0",
+    "pg": "^8.16.3"
+  }
+}

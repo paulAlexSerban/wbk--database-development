@@ -1,0 +1,14 @@
+{
+  "Servers": {
+    "1": {
+      "Name": "js-to-postgresql",
+      "Group": "Servers",
+      "Host": "database",
+      "Port": 5432,
+      "MaintenanceDB": "js-to-postgresql",
+      "Username": "admin",
+      "SSLMode": "prefer",
+      "PassFile": "/tmp/pgpass"
+    }
+  }
+}
