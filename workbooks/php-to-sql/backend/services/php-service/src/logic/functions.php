@@ -5,10 +5,10 @@ function setDatabaseConnection()
   global $connection;
 
   // these are the defined authentication environment in db service
-  $host = 'database-in-php_mysql'; // the MySQL service named in the docker-compose.yml
+  $host = 'php-to-sql_mysql'; // the MySQL service named in the docker-compose.yml
   $user = 'root'; // database user-name defined in .env
   $pass = 'root'; // database password defined in .env
-  $mydatabase = 'database-in-php';
+  $mydatabase = 'php-to-sql';
 
   // check the MySQL connection status
   $connection = new mysqli($host, $user, $pass, $mydatabase);
@@ -49,11 +49,15 @@ function getUsers($connection)
   if ($result = $connection->query($sql)) {
     while ($row = $result->fetch_assoc()) {
 ?>
-      <pre>
+<!--      <pre>
         <?php
         print_r($row);
         ?> 
-      </pre>
+      </pre> -->
+
+      <ul>
+        <li><?php echo $row['username']; ?> ---- <?php echo $row['password']; ?></li>
+      </ul>
 <?php
     }
   }

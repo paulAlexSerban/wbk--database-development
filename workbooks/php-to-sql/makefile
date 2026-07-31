@@ -6,9 +6,8 @@ compose_up:
 compose_down:
 	docker compose down
 
-compose_down_clean: backup-db
+compose_down_clean: backup_db
 	docker compose down -v
-	sudo rm -rf ./database/mysql-server/src/*
 
 save_db_snapshot:
 	if [ -f database/backup/main.sql ]; then \

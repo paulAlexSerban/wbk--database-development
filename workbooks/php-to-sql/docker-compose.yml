@@ -11,17 +11,17 @@ services:
       - MYSQL_DATABASE=${COMPOSE_PROJECT_NAME}
     restart: always
 
-  # php-apache-env:
-  #   container_name: database-in-php
-  #   build: 
-  #     context: ./php
-  #     dockerfile: Dockerfile
-  #   depends_on: 
-  #     - db
-  #   volumes: 
-  #     - ./php/src:/var/www/html
-  #   ports: 
-  #     - 8000:80
+  php-service:
+    container_name: ${COMPOSE_PROJECT_NAME}_php-service
+    build: 
+      context: ./backend/services/php-service
+      dockerfile: Dockerfile
+    depends_on: 
+      - database
+    volumes: 
+      - ./backend/services/php-service/src:/var/www/html
+    ports: 
+      - 8081:80
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
