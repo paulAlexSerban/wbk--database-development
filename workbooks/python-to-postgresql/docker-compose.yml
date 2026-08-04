@@ -1,0 +1,38 @@
+services:
+  database:
+    image: postgres:18
+    container_name: ${COMPOSE_PROJECT_NAME}_postgres
+    environment:
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_DB: ${COMPOSE_PROJECT_NAME}
+    ports:
+      - "${DATABASE_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DATABASE_USER} -d ${COMPOSE_PROJECT_NAME}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: always
+
+  web:
+    build: .
+    container_name: ${COMPOSE_PROJECT_NAME}_web
+    environment:
+      DATABASE_URL: postgresql+psycopg2://${DATABASE_USER}:${DATABASE_PASSWORD}@database:5432/${COMPOSE_PROJECT_NAME}
+      FLASK_APP: wsgi.py
+      FLASK_DEBUG: ${FLASK_DEBUG:-1}
+    ports:
+      - "${FLASK_RUN_PORT:-5000}:5000"
+    volumes:
+      - ./app:/app/app
+      - ./wsgi.py:/app/wsgi.py
+    depends_on:
+      database:
+        condition: service_healthy
+    restart: always
+
+volumes:
+  postgres_data:
