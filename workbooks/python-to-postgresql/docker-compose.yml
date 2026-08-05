@@ -1,0 +1,59 @@
+services:
+  database:
+    image: postgres:18
+    container_name: ${COMPOSE_PROJECT_NAME}_postgres
+    environment:
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_DB: ${COMPOSE_PROJECT_NAME}
+    ports:
+      - "${DATABASE_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql
+    restart: always
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: ${COMPOSE_PROJECT_NAME}_pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD}
+      PGADMIN_SERVER_JSON_FILE: /pgadmin4/servers.json
+    ports:
+      - "${PGADMIN_PORT:-5050}:80"
+    volumes:
+      - ./database/pgadmin/servers.json:/pgadmin4/servers.json:ro
+    depends_on:
+      - database
+    restart: always
+    entrypoint: >
+      /bin/sh -c "
+      echo 'database:5432:*:${DATABASE_USER}:${DATABASE_PASSWORD}' > /tmp/pgpass &&
+      chmod 600 /tmp/pgpass &&
+      /entrypoint.sh
+      "
+
+  jupyter:
+    build:
+      context: ./notebooks
+      dockerfile: Dockerfile
+    container_name: ${COMPOSE_PROJECT_NAME}_jupyter
+    environment:
+      JUPYTER_TOKEN: ${JUPYTER_TOKEN:-jupyter}
+      PYTHONPATH: /home/jovyan
+      DATABASE_HOST: database
+      DATABASE_PORT: "5432"
+      DATABASE_USER: ${DATABASE_USER}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+      COMPOSE_PROJECT_NAME: ${COMPOSE_PROJECT_NAME}
+    ports:
+      - "${JUPYTER_PORT:-8888}:8888"
+    volumes:
+      - ./notebooks:/home/jovyan/work
+      - ./scripts:/home/jovyan/scripts
+    depends_on:
+      - database
+    restart: always
+
+volumes:
+  postgres_data:
