@@ -1,0 +1,14 @@
+{
+  "Servers": {
+    "1": {
+      "Name": "python-to-postgresql-1nf",
+      "Group": "Servers",
+      "Host": "database",
+      "Port": 5432,
+      "MaintenanceDB": "python-to-postgresql-1nf",
+      "Username": "admin",
+      "SSLMode": "prefer",
+      "PassFile": "/tmp/pgpass"
+    }
+  }
+}
